@@ -31,6 +31,21 @@ function goto {
   esac
 }
 
+function goto-add-current() {
+  name="$1"
+  dest="$(pwd)"
+  if [ -z "$name" ]; then
+    echo "Usage: goto-add-current bookmark_name"
+  else
+    my_goto_places["$name"]="$dest"
+    if [ -f "$GOTO_PLACES_DATA" ]; then
+      echo "$name $dest" >> $GOTO_PLACES_DATA
+    else
+      echo "Could not find GOTO_PLACES_DATA file, can't add bookmark"
+    fi
+  fi
+}
+
 function _build_completions {
   local current_word
   COMPREPLY=()
