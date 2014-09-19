@@ -1,9 +1,20 @@
 #!/bin/bash
 
 # Should be sourced into .bashrc
+# Put this in .bashrc:
+# export GOTO_PLACES_DATA="/path/to/goto_places.dat"
+# . /path/to/goto_places.sh
+
 
 declare -A my_goto_places
-my_goto_places["a_project"]="/path/to/a_project"
+
+if [ ! -f "$GOTO_PLACES_DATA" ]; then
+  echo "Can't load goto, no GOTO_PLACES_DATA variable set"
+else
+  while IFS=' ' read name dest; do
+    my_goto_places[$name]="$dest"
+  done < "$GOTO_PLACES_DATA"
+fi
 
 function goto {
   case $1 in
