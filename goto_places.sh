@@ -31,15 +31,6 @@ function goto {
   esac
 }
 
-function goto-remove() {
-  local name="$1"
-  if [ -z "$name" ]; then
-    echo "Usage: goto-remove <alias>"
-  else
-    unset my_goto_places["$name"]
-  fi
-}
-
 function goto-add-current() {
   name="$1"
   dest="$(pwd)"
@@ -67,4 +58,3 @@ function _build_completions_for_goto {
 }
 
 complete -o nospace -F _build_completions_for_goto 'goto'
-complete -o nospace -F _build_completions_for_goto 'goto-remove'
